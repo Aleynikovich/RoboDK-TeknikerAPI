@@ -4201,10 +4201,13 @@ class Item:
             robot.MoveJ(target)             # Move the robot to the target using the selected reference frame
     """
 
-    def __init__(self, link: 'Robolink', ptr_item: Union[int, str] = 0, itemtype: int = -1):
+    def __init__(self, link: 'Robolink', dimX = None, dimY = None, dimZ = None, ptr_item: Union[int, str] = 0, itemtype: int = -1):
 
         self.link = link  # it is recommended to keep the link as a reference and not a duplicate (otherwise it will establish a new connection at every call)
         self.type = itemtype
+        self.dimensions =   dimX, dimY, dimZ
+        self.footprint  =   dimX*dimY
+        self.volume     =   dimX*dimY*dimZ
         if type(ptr_item) is str:
             self.item = int(ptr_item)
             if self.type == -1:
