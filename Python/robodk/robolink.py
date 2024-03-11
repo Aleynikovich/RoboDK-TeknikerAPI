@@ -4242,7 +4242,7 @@ class Item:
             robot.MoveJ(target)             # Move the robot to the target using the selected reference frame
     """
 
-    def __init__(self, link: 'Robolink', dimX = None, dimY = None, dimZ = None, ptr_item: Union[int, str] = 0, itemtype: int = -1):
+    def __init__(self, link: 'Robolink', dimX = 0, dimY = 0, dimZ = 0, ptr_item: Union[int, str] = 0, itemtype: int = -1):
 
         self.link = link  # it is recommended to keep the link as a reference and not a duplicate (otherwise it will establish a new connection at every call)
         self.type = itemtype
@@ -7440,3 +7440,44 @@ if __name__ == "__main__":
 
     # RoboDKInfo()
     pass
+
+###### TEKNIKER STD METHODS ######
+def varGen():
+    
+    """
+    Generates variable declarations for all items in the RoboDK station and saves them to a Python script file.
+
+    This function retrieves all items present in the RoboDK station, generates variable declarations for each item,
+    and writes them to a Python script file named 'stationData.py'. Each variable declaration assigns an item to a 
+    variable with a name based on the item's name (only the first word). The script also imports necessary modules 
+    from RoboDK (robolink and robomath) and initializes the Robolink interface.
+
+    Args:
+    - None
+
+    Returns:
+    - None
+
+    The generated Python script contains variable declarations for all items in the RoboDK station, which can be 
+    used for further scripting and automation tasks.
+    """
+    
+    RDK = Robolink()
+
+    # Get all items in the station
+    all_items = RDK.ItemList()
+
+    # Open a file to write the Python script
+    with open('stationData.py', 'w') as file:
+        file.write("# RoboDK Station Data\n")
+        file.write("from robodk.robolink import *\n\n")
+        file.write("from robodk.robomath import *\n\n")
+        file.write("RDK = Robolink()\n\n")
+        
+        # Loop through all items
+        for item in all_items:
+            name = item.Name()
+            variable_declaration = f"{name.split()[0]} = RDK.Item('{name}')\n"
+            file.write(variable_declaration)
+
+    print("Station data saved to: stationData.py")   
