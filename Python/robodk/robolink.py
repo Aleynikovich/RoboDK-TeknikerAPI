@@ -7476,6 +7476,7 @@ def varGen():
         
         # Loop through all items
         for item in all_items:
+            print(item)
             name = item.Name()
             variable_declaration = f"{name.split()[0]} = RDK.Item('{name}')\n"
             file.write(variable_declaration)
