@@ -14,7 +14,7 @@ this_directory = Path(__file__).parent
 LONG_DESCRIPTION = (this_directory / "README.md").read_text()
 
 setup(
-    name='robodk',
+    name='TeknikerRobodk',
     python_requires='>=3.5',  # Separate version for Python 2, without type hints
 
     # Versions should comply with PEP440.  For a discussion on single-sourcing
