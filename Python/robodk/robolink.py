@@ -778,6 +778,47 @@ class Robolink:
     # Remember last status message
     LAST_STATUS_MESSAGE: str = ''
 
+    #TEKNIKER METHODS
+    def varGen():
+        
+        """
+        Generates variable declarations for all items in the RoboDK station and saves them to a Python script file.
+
+        This function retrieves all items present in the RoboDK station, generates variable declarations for each item,
+        and writes them to a Python script file named 'stationData.py'. Each variable declaration assigns an item to a 
+        variable with a name based on the item's name (only the first word). The script also imports necessary modules 
+        from RoboDK (robolink and robomath) and initializes the Robolink interface.
+
+        Args:
+        - None
+
+        Returns:
+        - None
+
+        The generated Python script contains variable declarations for all items in the RoboDK station, which can be 
+        used for further scripting and automation tasks.
+        """
+        
+        RDK = Robolink()
+
+        # Get all items in the station
+        all_items = RDK.ItemList()
+
+        # Open a file to write the Python script
+        with open('stationData.py', 'w') as file:
+            file.write("# RoboDK Station Data\n")
+            file.write("from robodk.robolink import *\n")
+            file.write("from robodk.robomath import *\n")
+            file.write("RDK = Robolink()\n")
+            
+            # Loop through all items
+            for item in all_items:
+                name = item.Name()
+                variable_declaration = f"{name.split()[0]} = RDK.Item('{name}')\n"
+                file.write(variable_declaration)
+
+        print("Station data saved to: stationData.py")
+
     #%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     def _setTimeout(self, timeout_sec: float = 30):
         """Set the communication timeout (in seconds)."""

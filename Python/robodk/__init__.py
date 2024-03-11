@@ -41,5 +41,5 @@ warn(s, PendingDeprecationWarning)
 
 #==================================
 # UNCOMMENT BELOW after the adoption period
-#__all__ = ['robolink', 'robomath', 'robodialogs', 'robofileio']
+__all__ = ['robolink', 'robomath', 'robodialogs', 'robofileio']
 #==================================
